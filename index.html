@@ -1,0 +1,913 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSer</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .menu-button {
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 1.5rem 6rem;
+            background: linear-gradient(135deg, var(--light) 0%, #f1f5f9 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .hero-text h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            margin-bottom: 2rem;
+            color: var(--gray);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 1.5rem;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .service-desc {
+            color: var(--gray);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 6rem 1.5rem;
+            background: #f8fafc;
+        }
+
+        .products-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-image {
+            height: 200px;
+            background: #e0e7ff;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: #e0e7ff;
+            color: var(--primary);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+        }
+
+        .product-link {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .product-link:hover {
+            color: #1d4ed8;
+        }
+
+        .product-link svg {
+            margin-left: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 1.5rem;
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-content {
+                grid-template-columns: repeat(2, 1fr);
+                align-items: center;
+            }
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 1rem;
+        }
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 1.5rem;
+            background: #f8fafc;
+        }
+
+        .contact-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .form-control {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control input,
+        .form-control textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-family: inherit;
+        }
+
+        .form-control textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .location {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .location h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .location-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .location-icon {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 3rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-links a {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info svg {
+            margin-right: 0.5rem;
+            color: var(--primary);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .socials {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Responsive */
+        .menu-button {
+            display: block;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            display: none;
+            flex-direction: column;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        @media (min-width: 768px) {
+            .menu-button {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll animations */
+        .scroll-animation {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">XSer</div>
+            <div class="menu-button" onclick="toggleMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="menu-icon" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#home" class="nav-link" onclick="toggleMenu()">Home</a>
+            <a href="#services" class="nav-link" onclick="toggleMenu()">Services</a>
+            <a href="#products" class="nav-link" onclick="toggleMenu()">Products</a>
+            <a href="#about" class="nav-link" onclick="toggleMenu()">About</a>
+            <a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Redefining Digital <span class="highlight">Innovation</span></h1>
+                <p>We create cutting-edge solutions that empower businesses to thrive in the digital age. From cloud infrastructure to AI-driven analytics, we deliver excellence.</p>
+                <div>
+                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                    <a href="#products" class="btn btn-outline">Explore Products</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://picsum.photos/800/600" alt="Innovation">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services scroll-animation">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>We offer a comprehensive suite of digital solutions tailored to meet modern business challenges.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                    </svg>
+                </div>
+                <h3 class="service-title">Cloud Solutions</h3>
+                <p class="service-desc">Scalable cloud infrastructure with enterprise-grade security and 99.9% uptime SLA.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <circle cx="12" cy="13" r="3" />
+                    </svg>
+                </div>
+                <h3 class="service-title">AI Development</h3>
+                <p class="service-desc">Custom AI solutions that transform data into actionable insights and intelligent workflows.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                        <line x1="9" y1="9" x2="9.01" y2="9" />
+                        <line x1="15" y1="9" x2="15.01" y2="9" />
+                    </svg>
+                </div>
+                <h3 class="service-title">Cybersecurity</h3>
+                <p class="service-desc">Comprehensive security solutions protecting your digital assets against evolving threats.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 20V10" />
+                        <path d="M12 20V4" />
+                        <path d="M6 20v-6" />
+                    </svg>
+                </div>
+                <h3 class="service-title">Data Analytics</h3>
+                <p class="service-desc">Turn raw data into strategic advantages with our advanced analytics platforms.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                    </svg>
+                </div>
+                <h3 class="service-title">Software Development</h3>
+                <p class="service-desc">Full-cycle software development from concept to deployment with modern tech stacks.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                    </svg>
+                </div>
+                <h3 class="service-title">Digital Transformation</h3>
+                <p class="service-desc">Strategic digital transformation roadmap to future-proof your business operations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products scroll-animation">
+        <div class="section-header">
+            <h2>Our Products</h2>
+            <p>Innovative products designed to solve real-world business challenges with precision.</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/600/400" alt="XSer Cloud">
+                </div>
+                <div class="product-content">
+                    <h3>XSer Cloud</h3>
+                    <p>Enterprise-grade cloud platform offering scalable infrastructure with built-in security and compliance.</p>
+                    <div class="product-tags">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag">Serverless</span>
+                        <span class="tag">AI/ML</span>
+                        <span class="tag">IoT</span>
+                    </div>
+                    <a href="#contact" class="product-link">Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://picsum.photos/601/401" alt="XSer Analytics">
+                </div>
+                <div class="product-content">
+                    <h3>XSer Analytics</h3>
+                    <p>Real-time analytics platform powered by machine learning for actionable business insights.</p>
+                    <div class="product-tags">
+                        <span class="tag">Big Data</span>
+                        <span class="tag">Visualization</span>
+                        <span class="tag">Predictive</span>
+                        <span class="tag">API</span>
+                    </div>
+                    <a href="#contact" class="product-link">Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about scroll-animation">
+        <div class="section-header">
+            <h2>About XSer</h2>
+            <p>We're a global team of innovators committed to pushing the boundaries of technology.</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://picsum.photos/801/600" alt="Team">
+            </div>
+            <div class="about-text">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Our Mission</h3>
+                    <p class="mb-4">At XSer, we believe technology should empower people and organizations to achieve their fullest potential. Our mission is to create innovative solutions that simplify complexity and drive progress.</p>
+                    <p>Founded in 2020 by a team of industry veterans, we've grown into a global organization serving clients across multiple continents.</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">150+</div>
+                        Team Members
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">40+</div>
+                        Global Clients
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        Countries Served
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2020</div>
+                        Founded
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact scroll-animation">
+        <div class="section-header">
+            <h2>Contact Us</h2>
+            <p>Have questions or need a solution tailored to your business? Reach out to our experts today.</p>
+        </div>
+        <div class="contact-grid">
+            <div>
+                <form class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class="form-control">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your name">
+                    </div>
+                    <div class="form-control">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-control">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="How can we help?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                </form>
+            </div>
+            <div>
+                <div class="location">
+                    <h3>Our Offices</h3>
+                    <div class="location-item">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M12 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4 1A3 3 0 0 0 1 4v10a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3H4zm2 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Headquarters</h4>
+                            <p>450 Technology Park<br>Silicon Valley, CA 94043</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0v.006c0 .089.02.173.05.252l1.703 4.26a3 3 0 1 1-5.406 0L3.55 2.751A2.5 2.5 0 0 1 3 2.5zM3 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                                <path d="M13 2.5a2.5 2.5 0 0 1 2.481 2.186l-1.96 3.92A2.5 2.5 0 0 1 11 9.5v4a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-4a2.5 2.5 0 0 1-2.481-2.766l1.96-3.92A1.5 1.5 0 0 1 5 2.5h8z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Asia Office</h4>
+                            <p>Tokyo Tower Building<br>Minato City, Tokyo, Japan</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M14.5 13.5h-13l-.5-.5v-11l.5-.5h13l.5.5v11l-.5.5zm-13 1 13 0 0-12-13 0 0 12z"/>
+                                <path d="M7 9.5c1.93 0 3.5-1.57 3.5-3.5S8.93 2.5 7 2.5 3.5 4.07 3.5 6s1.57 3.5 3.5 3.5z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Europe Office</h4>
+                            <p>London Tech Hub<br>Central London, United Kingdom</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h4 class="footer-section">XSer</h4>
+                <p>Innovating the future of technology with cutting-edge solutions for modern enterprises.</p>
+            </div>
+            <div>
+                <h4 class="footer-section">Products</h4>
+                <ul class="footer-links">
+                    <li><a href="#">XSer Cloud</a></li>
+                    <li><a href="#">XSer Analytics</a></li>
+                    <li><a href="#">Security Suite</a></li>
+                    <li><a href="#">AI Platform</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-section">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-section">Contact</h4>
+                <ul class="footer-links">
+                    <li class="contact-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.698V4.87l8 4.444 8-4.444v-.172L8.36 8.295a1 1 0 0 1-.72 0L0 4.698z"/>
+                            <path d="M0 5.72 8 10.083 16 5.72V14.5a1.5 1.5 0 0 1-1.5 1.5H1.5A1.5 1.5 0 0 1 0 14.5V5.72z"/>
+                        </svg>
+                        sales@xser.com
+                    </li>
+                    <li class="contact-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                        +1 (234) 567-890
+                    </li>
+                    <li class="contact-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3.5h3a.5.5 0 0 1 0 1h-3.5A.5.5 0 0 1 8 8V4z"/>
+                        </svg>
+                        Mon-Fri 9am-6pm (PST)
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 XSer. All rights reserved.</p>
+            <div class="socials">
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Facebook</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('active');
+            icon.setAttribute('d', menu.classList.contains('active') ? 
+                'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+        }
+
+        // Scroll animation observer
+        const scrollObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        // Add scroll animations to elements
+        document.querySelectorAll('.scroll-animation').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+        // Navigation active link highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.reset();
+            alert('Thank you for your message! We will get back to you soon.');
+        });
+    </script>
+</body>
+</html>
+```
