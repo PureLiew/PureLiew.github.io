@@ -1,58 +1,53 @@
-/* 基本样式 */
+/* 基本设置 */
 body {
   font-family: "Segoe UI", sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
   margin: 0;
   padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
   line-height: 1.6;
 }
 
-/* 头部样式 */
+/* 头部导航栏 */
 header {
   background-color: #007acc;
   color: white;
-  padding: 2rem;
+  padding: 1rem 2rem;
   text-align: center;
 }
 
-/* 主体内容样式 */
+nav {
+  margin-top: 1rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* 页面主体内容 */
 main {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
-/* 每个区块标题 */
-section h2 {
+h1 {
   color: #007acc;
-  margin-top: 1.5rem;
-}
-
-/* 列表样式 */
-ul {
-  list-style: disc inside;
 }
 
 /* 底部样式 */
 footer {
   text-align: center;
-  padding: 1rem;
+  padding: 2rem 0;
   font-size: 0.9rem;
   color: #777;
   border-top: 1px solid #ddd;
-  margin-top: 2rem;
-}
-
-/* 按钮样式 */
-button {
-  display: block;
-  margin: 2rem auto;
-  padding: 0.7rem 1.5rem;
-  font-size: 1rem;
-  background-color: #007acc;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  margin-top: 3rem;
 }
